@@ -1,5 +1,6 @@
 package com.vinicius.br.jogo_do_bixo.models.users;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -24,14 +25,33 @@ public class Usuario implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String login;
+    @JsonIgnore
     private String password;
     private String cpf;
+    @Column(name = "lastBetDay")
     private LocalDate lastBetDay;
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
+    private Boolean isActive;
+
+    public Usuario(String login, String password, String cpf,UserRole role) {
+        this.login = login;
+        this.password = password;
+        this.cpf = cpf;
+        this.role = role;
+        this.isActive = true;
+        this.lastBetDay = null;
+    }
+
+    //construtor pra registro de usuasrio
+
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        if(this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"),
+                new SimpleGrantedAuthority("ROLE_USER"));
+        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
