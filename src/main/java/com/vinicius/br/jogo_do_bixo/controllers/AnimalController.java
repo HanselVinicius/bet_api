@@ -1,9 +1,6 @@
 package com.vinicius.br.jogo_do_bixo.controllers;
 
-import com.vinicius.br.jogo_do_bixo.models.animals.Animal;
-import com.vinicius.br.jogo_do_bixo.models.animals.AnimalRegisterDTO;
-import com.vinicius.br.jogo_do_bixo.models.animals.AnimalRepository;
-import com.vinicius.br.jogo_do_bixo.models.animals.DetailAnimalDTO;
+import com.vinicius.br.jogo_do_bixo.models.animals.*;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -20,6 +17,9 @@ public class AnimalController {
     @Autowired
     private AnimalRepository animalRepository;
 
+    @Autowired
+    private SorteioDeAnimais sorteioDeAnimais;
+
     @PostMapping
     @Transactional
     public ResponseEntity registerAnimal(@RequestBody  @Valid AnimalRegisterDTO dto, UriComponentsBuilder uriBuilder){
@@ -34,6 +34,14 @@ public class AnimalController {
     public ResponseEntity getOne(@PathVariable Long id){
         var animal = animalRepository.getReferenceById(id);
         return ResponseEntity.ok(new DetailAnimalDTO(animal));
+    }
+
+
+    @GetMapping
+    @Transactional
+    public ResponseEntity getRandom(){
+        var animal = animalRepository.findRandomAnimal();
+        return ResponseEntity.ok(sorteioDeAnimais.draw(animal));
     }
 
 
