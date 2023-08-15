@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Table(name = "animals")
 @Entity(name = "Animal")
@@ -23,11 +24,12 @@ public class Animal {
     private String nome;
     private Boolean isOfTheDay;
     private LocalDate createdAt;
+    private LocalDate lastDayDrawed;
 
     public Animal(AnimalRegisterDTO dto) {
         this.nome = dto.name();
         this.isOfTheDay = false;
         this.createdAt = LocalDate.now();
-
+        this.lastDayDrawed = null;
     }
 }

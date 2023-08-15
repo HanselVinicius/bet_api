@@ -45,6 +45,10 @@ public class ErrorTreatments {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
+    @ExceptionHandler(ValidacaoException.class)
+    public ResponseEntity tratarValidacaoException(ValidacaoException ex){
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
 
     private record ValidationErrorDTO(String field, String message){
         public ValidationErrorDTO(FieldError error){

@@ -17,7 +17,12 @@ public interface AnimalRepository extends JpaRepository<Animal,Long> {
 
     @Modifying
     @Query("""
-            UPDATE Animal a SET a.isOfTheDay = true WHERE a.nome = :nome
+            UPDATE Animal a SET a.isOfTheDay = true,a.lastDayDrawed = CURDATE() WHERE a.nome = :nome
             """)
     void updateDrawedAnimal(@Param("nome") String nome);
+
+    @Query("""
+            SELECT a FROM Animal a WHERE a.lastDayDrawed = CURDATE()
+            """)
+    Animal findTodayAnimal();
 }
