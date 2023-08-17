@@ -28,11 +28,11 @@ public class BetService {
     private List<BetValidator> betValidatorList;
 
     public Bet createBet(BetRegisterDTO dto) {
-        var user =  usuarioRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
+        var user =  usuarioRepository.findUsuarioByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
         var animal = animalRepository.findByNome(dto.nomeAnimal());
-        //validation
-        betValidatorList.forEach(b-> b.validate());
 
-        return new Bet(animal, (Usuario) user);
+        betValidatorList.forEach(BetValidator::validate);
+        //rodar um update para lastBetDay do usuario
+        return new Bet(animal, user);
     }
 }
