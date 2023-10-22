@@ -2,10 +2,7 @@ package com.vinicius.br.jogo_do_bixo.models.users;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
+@ToString
 public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,11 +32,11 @@ public class Usuario implements UserDetails {
     private UserRole role;
     private Boolean isActive;
 
-    public Usuario(String login, String password, String cpf,UserRole role) {
+    public Usuario(String login, String password, String cpf) {
         this.login = login;
         this.password = password;
         this.cpf = cpf;
-        this.role = role;
+        this.role = UserRole.USER;
         this.isActive = true;
         this.lastBetDay = null;
     }

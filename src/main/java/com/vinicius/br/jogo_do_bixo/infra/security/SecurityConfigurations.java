@@ -24,12 +24,15 @@ public class SecurityConfigurations {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        return http.csrf(AbstractHttpConfigurer::disable)
+        return http
+                .cors(AbstractHttpConfigurer::disable)
+                .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> {
-                    req.requestMatchers("v1/auth/login","v1/auth/register").permitAll();
+                    req.requestMatchers(SWAGGER).permitAll();
+                    req.requestMatchers(HttpMethod.POST,"v1/auth/login","v1/auth/register").permitAll();
+                    req.requestMatchers(HttpMethod.OPTIONS,"v1/auth/login","v1/auth/register").permitAll();
                     req.requestMatchers(HttpMethod.POST,"v1/animal").hasAnyRole("ADMIN");
-                    req.requestMatchers("/v3/api-docs/**","swagger-ui.html","/swagger-ui/**").permitAll();
                     req.anyRequest().authenticated();
                 })
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
@@ -44,5 +47,14 @@ public class SecurityConfigurations {
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
+    private static final String[] SWAGGER = {
+            "/resources/**",
+            "/v3/api-docs/**",
+            "/configuration/**",
+            "/swagger*/**",
+            "/webjars/**",
+            "/"
+    };
 
 }

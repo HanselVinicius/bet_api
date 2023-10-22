@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 
 @Component
-public class AreadyBetTodayValidation implements BetValidator{
+public class AlreadyBetTodayValidation implements BetValidator{
 
 
 
@@ -18,7 +18,7 @@ public class AreadyBetTodayValidation implements BetValidator{
 
     @Override
     public void validate() {
-        var usuario = usuarioRepository.findUsuarioByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
+        var usuario = usuarioRepository.findUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
         if (usuario.getLastBetDay().getDayOfMonth() != LocalDate.now().getDayOfMonth()) {
             throw new ValidacaoException("USUARIO INFORMADO JA APOSTOU HOJE");
         }

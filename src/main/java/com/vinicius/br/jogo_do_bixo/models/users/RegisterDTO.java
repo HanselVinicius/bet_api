@@ -10,6 +10,5 @@ public record RegisterDTO(
         @NotBlank
         String password,
         @NotBlank
-        String cpf,
-        UserRole role) {
+        String cpf) {
 }

@@ -10,4 +10,5 @@ public class JogoDoBixoApplication {
 		SpringApplication.run(JogoDoBixoApplication.class, args);
 	}
 
+
 }

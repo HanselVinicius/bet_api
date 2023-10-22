@@ -8,10 +8,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
     UserDetails findByLogin(String login);
 
 
-    @Query(""" 
-            SELECT a FROM Usuario
-            WHERE a.login = :login
-           
-            """)
-    Usuario findUsuarioByLogin(String login);
+    @Query(value = "SELECT * FROM users u WHERE u.login = :login",
+            nativeQuery = true)
+    Usuario findUserByLogin(String login);
 }
