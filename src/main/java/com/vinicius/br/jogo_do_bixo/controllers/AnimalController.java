@@ -45,7 +45,7 @@ public class AnimalController {
 
     @GetMapping()
     public ResponseEntity getAll(@PageableDefault(size = 20,sort = {"nome"}) Pageable pageable){
-        var animals = animalRepository.findAll(pageable).map(DetailAnimalDTO::new);
+        var animals = animalRepository.findAll(pageable).map(ListagemAnimalDTO::new);
         return ResponseEntity.ok(animals);
     }
 
