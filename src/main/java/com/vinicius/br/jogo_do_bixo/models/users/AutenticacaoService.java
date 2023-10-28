@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AutenticacaoService implements UserDetailsService {
-
+//esse service é extremamente necessario uma vez que sem ele e sem o loadUserByUsername o spring não consegue fazer a autenticação
+// e acaba retornando um stackoverflow null
     @Autowired
     private UsuarioRepository repository;
 
