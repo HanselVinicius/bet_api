@@ -31,7 +31,7 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(req -> {
                     req.requestMatchers(SWAGGER).permitAll();
                     req.requestMatchers(HttpMethod.POST,"v1/auth/login","v1/auth/register").permitAll();
-                    req.requestMatchers(HttpMethod.OPTIONS,"v1/auth/login","v1/auth/register").permitAll();
+                    req.requestMatchers(HttpMethod.OPTIONS,"**").permitAll();
                     req.requestMatchers(HttpMethod.POST,"v1/animal").hasAnyRole("ADMIN");
                     req.anyRequest().authenticated();
                 })
