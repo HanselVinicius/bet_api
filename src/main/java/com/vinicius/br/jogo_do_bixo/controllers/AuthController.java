@@ -43,8 +43,6 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Valid RegisterDTO dto){
         if (this.repository.findByLogin(dto.login()) != null) return ResponseEntity.badRequest().build();
-        var senha = new BCryptPasswordEncoder().encode(dto.password());
-        var user = new Usuario(dto.login(), senha, dto.cpf());
-        return ResponseEntity.ok().body(repository.save(user));
+        return ResponseEntity.ok().body(repository.save(tokenService.getUser(dto)));
     }
 }
