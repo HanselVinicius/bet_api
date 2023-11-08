@@ -19,8 +19,10 @@ public class AlreadyBetTodayValidation implements BetValidator{
     @Override
     public void validate() {
         var usuario = usuarioRepository.findUserByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
-        if (usuario.getLastBetDay().getDayOfMonth() != LocalDate.now().getDayOfMonth()) {
-            throw new ValidacaoException("USUARIO INFORMADO JA APOSTOU HOJE");
+        if(usuario.getLastBetDay() != null) {
+            if (usuario.getLastBetDay().getDayOfMonth() == LocalDate.now().getDayOfMonth()) {
+                throw new ValidacaoException("USUARIO INFORMADO JA APOSTOU HOJE");
+            }
         }
     }
 }
