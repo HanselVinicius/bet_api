@@ -39,8 +39,7 @@ public class AnimalController {
     @GetMapping("/random")
     @Transactional
     public ResponseEntity getRandom(){
-        var animal = animalRepository.findRandomAnimal();
-        return ResponseEntity.ok(sorteioDeAnimais.draw(animal));
+        return ResponseEntity.ok(sorteioDeAnimais.draw());
     }
 
     @GetMapping()

@@ -4,6 +4,7 @@ package com.vinicius.br.jogo_do_bixo.models.animals;
 import com.vinicius.br.jogo_do_bixo.models.animals.validadores.ValidadoresDeSorteio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -20,8 +21,10 @@ public class SorteioDeAnimais {
     @Autowired
     private AnimalRepository animalRepository;
 
-    public AnimalDrawDTO draw(Animal animal){
+    @Scheduled(fixedRate = 86400)
+    public AnimalDrawDTO draw(){
         //validar
+        var animal = animalRepository.findRandomAnimal();
         validadores.forEach(v -> v.validar(animal));
 
         animalRepository.updateDrawedAnimal(animal.getNome());
