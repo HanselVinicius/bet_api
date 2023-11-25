@@ -28,6 +28,7 @@ public class SorteioDeAnimais {
         validadores.forEach(v -> v.validar(animal));
 
         animalRepository.updateDrawedAnimal(animal.getNome());
+        animalRepository.updateIsOfTheDayToNull();
         return new AnimalDrawDTO(animal.getId(), animal.getNome(), LocalDate.now());
     }
 
