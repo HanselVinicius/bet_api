@@ -21,7 +21,7 @@ public class SorteioDeAnimais {
     @Autowired
     private AnimalRepository animalRepository;
 
-    @Scheduled(fixedRate = 86400)
+    @Scheduled(cron = "0 0 12 * * *", zone = "America/Sao_Paulo")
     public AnimalDrawDTO draw(){
         //validar
         var animal = animalRepository.findRandomAnimal();
